@@ -10,9 +10,13 @@ int main(){
     
     double discriminant = (b*b) -(4*a*c);
     
-    x1 = (-b + sqrt(discriminant))/(2*a);
-    x2 = (-b - sqrt(discriminant))/(2*a);
-    
-    std::cout<< "x1 = "<<x1<<std::endl;
-    std::cout<< "x2 = "<<x2<<std::endl;
+    if (discriminant = 0){
+        std::cout<<"No solutions"<<std::endl;
+    }
+    else{
+        x1 = (-b + sqrt(discriminant))/(2*a);
+        x2 = (-b - sqrt(discriminant))/(2*a);
+        std::cout<< "x1 = "<<x1<<std::endl;
+        std::cout<< "x2 = "<<x2<<std::endl;
+    }
 }
