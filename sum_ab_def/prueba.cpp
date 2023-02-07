@@ -10,6 +10,9 @@ int main(){
         cout<<"a no es positivo. Pruebe otra vez: "; cin>>a;
     }
     cout<<"Introduce b: "; cin >> b;
+    while(b<1){
+        cout<<"b no es positivo. Pruebe otra vez: "; cin>>b;
+    }
     for(long int i=a; i<=b; i++){
         sum+=i;
         cout<<"Prueba"
