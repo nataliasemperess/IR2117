@@ -12,7 +12,6 @@ int main(){
     double discriminant = (b*b) -(4*a*c);
     
     if (discriminant < 0){
-        //std::complex<<double> sqrt
         std::cout<<"No solutions"<<std::endl;
     }
     else{
