@@ -7,7 +7,7 @@ int main(int argc, char** argv){
     
     std::cin>>element;
     
-   while(!std::cin.eof() > 0){ //CTRL + D -> INDICAR FINAL DEL FICHERO
+    while(not std::cin.eof() > 0){ //CTRL + D -> INDICAR FINAL DEL FICHERO
         n+=1;
         s+=element;
         std::cin>>element;
