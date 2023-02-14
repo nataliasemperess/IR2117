@@ -6,8 +6,9 @@ int main(int argc, char** argv){
     int n = argc -1;
     
     for (int i = 1; i <= n; i++){
-        s += argv[i];
+        s += atoi(argv[i]); // Atoi convierte un texto a un num
     }
+    m = s/n
     
     std::cout<<"Arithmetic mean: "<< m << std::endl;
     return 0;
