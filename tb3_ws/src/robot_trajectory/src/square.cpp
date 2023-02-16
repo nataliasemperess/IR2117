@@ -12,13 +12,38 @@ int main(int argc, char * argv[])
   geometry_msgs::msg::Twist message;
   rclcpp::WallRate loop_rate(500ms);
 
-  while (rclcpp::ok()) {
-    message.linear.x = 1.0;
-    message.angular.z = 1.0;
+  for(int j=0; j<4; j++){
+
+  int i=0,n=1000;
+  while (rclcpp::ok() && (i<n)){
+    message.linear.x = 0.1;
+    message.angular.z = 0;
     publisher->publish(message);
     rclcpp::spin_some(node);
     loop_rate.sleep();
+    i++;
   }
+  
+  i=0, n=170;
+  while (rclcpp::ok() && (i<n)){
+    message.linear.x = 0;
+    message.angular.z = 0.1;
+    publisher->publish(message);
+    rclcpp::spin_some(node);
+    loop_rate.sleep();
+    i++;
+  }
+  
+  while (rclcpp::ok()){
+    message.linear.x = 0;
+    message.angular.z = 0;
+    publisher->publish(message);
+    rclcpp::spin_some(node);
+    loop_rate.sleep();
+    i++;
+  }
+  }
+  
   rclcpp::shutdown();
   return 0;
 }
