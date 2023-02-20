@@ -14,8 +14,7 @@ int main(){
     }
     std::sort(elements.begin(), elements.end());
     for (int i = 0; i < n; i++){
-        for (int j = 0; j < n;j++){
-            if (elements[i] == elements[j])){
+            if (elements[0] == elements[i])){
                 frec += 1;
             }
         }
