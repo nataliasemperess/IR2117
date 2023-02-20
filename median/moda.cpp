@@ -3,7 +3,7 @@
 #include <algorithm>
 
 int main(){
-    int n = 0, element, frec = 1;
+    int n = 0, element, frec = 1, max_frec;
     std::vector<int> elements;
     std::cin>>element;
     
@@ -13,6 +13,18 @@ int main(){
         std::cin>>element;
     }
     std::sort(elements.begin(), elements.end());
-    int moda = elements[0];
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < n;j++){
+            if (elements[i] == elements[j])){
+                frec += 1;
+            }
+        }
+        if (frec > max_frec){
+            m = elements[i];
+            max_frec = frec;
+        }
+    }
+    std::cout<<"Elemento: "<<element[0]<<std::endl;
+    std::cout<<"Mode: "<< m <<endl;
     return 0;
 }
