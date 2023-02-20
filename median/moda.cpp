@@ -23,8 +23,8 @@ int main(){
             m = elements[i];
             max_frec = frec;
         }
+        std::cout<<"Elemento: "<<element[i]<<std::endl;
     }
-    std::cout<<"Elemento: "<<element[0]<<std::endl;
     std::cout<<"Mode: "<< m <<endl;
     return 0;
 }
