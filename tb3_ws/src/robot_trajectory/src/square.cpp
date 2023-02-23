@@ -1,4 +1,5 @@
 #include <chrono>
+#include <cmath>
 #include "rclcpp/rclcpp.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 
@@ -28,7 +29,7 @@ int main(int argc, char * argv[])
 	 }
 	  
 	  i=0;
-	  n=(3.14/2)/(0.001*angular_speed);
+	  n=(M_PI)/(0.001*angular_speed);
 	  while (rclcpp::ok() && (i<n)){
 	    message.linear.x = 0;
 	    message.angular.z = angular_speed;
