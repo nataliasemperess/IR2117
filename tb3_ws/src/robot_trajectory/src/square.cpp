@@ -28,7 +28,7 @@ int main(int argc, char * argv[])
 	 }
 	  
 	  i=0;
-	  n=985;
+	  n=1000;
 	  while (rclcpp::ok() && (i<n)){
 	    message.linear.x = 0;
 	    message.angular.z = angular_speed;
