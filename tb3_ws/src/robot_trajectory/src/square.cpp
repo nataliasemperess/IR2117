@@ -17,7 +17,7 @@ int main(int argc, char * argv[])
   double linear_speed = node->get_parameter("linear_speed").get_parameter_value().get<double>();
   double angular_speed = node->get_parameter("angular_speed").get_parameter_value().get<double>();
   for(int j=0; j<4; j++){
-	int i = 0, n = 1000;
+	int i = 0, n = 1/(0.001*linear_speed);
 	while (rclcpp::ok() && (i<n)){
 	   message.linear.x = linear_speed;
 	   message.angular.z = 0.0;
@@ -28,7 +28,7 @@ int main(int argc, char * argv[])
 	 }
 	  
 	  i=0;
-	  n=1000;
+	  n=(3.14/2)/(0.001*angular_speed);
 	  while (rclcpp::ok() && (i<n)){
 	    message.linear.x = 0;
 	    message.angular.z = angular_speed;
