@@ -4,6 +4,10 @@ from launch_ros.actions import None
 def generate_launch_description():
 	return LaunchDescription([
 	  Node(
+	    package = 'turtlesim',
+	    executable = 'turtlesim_node'
+	  ),
+	  Node(
 	    package = 'robot_trajectory',
 	    executable = 'square',
 	    remappings = [
