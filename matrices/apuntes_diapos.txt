@@ -1,0 +1,171 @@
+Fijo frente a dinámico 
+
+- El compilador genera mejor código (más rápido) porque conoce el tamaño de las matrices y los vectores.
+
+- También permite una comprobación más rigurosa en tiempo de compilación.
+  Por ejemplo, el compilador se quejará si intenta multiplicar una Matrix4d (una matriz de 4 por 4) por un Vector3d (un vector de tamaño 3)
+
+- Sin embargo, el uso de muchos tipos aumenta el tiempo de compilación y el tamaño del ejecutable.
+
+- Además, es posible que no se conozca el tamaño de la matriz en tiempo de compilación.
+
+- Regla general: utilice matrices de tamaño fijo para tamaños de 4 por 4 y menores.
+
+
+Cambio de tamaño
+
+- El tamaño actual de una matriz puede obtenerse mediante rows(), cols() y size().
+
+- Estos métodos devuelven el número de filas, el número de columnas y el número de coeficientes, respectivamente.
+
+- El redimensionamiento de una matriz de tamaño dinámico se realiza mediante el método resize().
+
+
+Asignación y redimensionamiento
+
+- La asignación es la acción de copiar una matriz  en otra, utilizando el operador=. 
+
+- Eigen redimensiona automáticamente la matriz de la izquierda para que coincida con el tamaño 
+  de la matriz de la derecha.
+  
+  
+Suma y resta
+
+- El lado izquierdo y el lado derecho deben, por supuesto, tener el mismo número de filas y de columnas. 
+
+- También deben tener el mismo tipo Scalar,  como Eigen no hace la promoción automática de tipo. 
+
+- Los operadores a mano aquí son:
+        operador binario + como en a+b
+        operador binario - como en a-b
+        operador unario - como en -a        
+        operador compuesto += como en a+=b
+        operador compuesto -= como en a-=b
+        
+        
+        
+Multiplicación y división de escalares
+
+- La multiplicación y la división por un escalar también son muy sencillas. 
+
+- Los operadores que tenemos a mano son
+    
+        operador binario * como en matrix*scalar
+        operador binario * como en escalar*matriz
+        operador binario / como en matriz/escalar
+        operador compuesto *= como en matrix*=scalar
+        operador compuesto /= como en matrix/=scalar
+        
+        
+Transposición y conjugación
+
+- La transpuesta, conjugada y adjunta (es decir, la transpuesta conjugada) de una matriz o vector a se obtienen 
+  mediante las funciones miembro transpose(), conjugate() y adjoint(), respectivamente.
+
+  - Para la transposición en el lugar, como por ejemplo en  a = a.transpose(), basta con utilizar la función        transposeInPlace().
+  
+  
+Multiplicación matriz-matriz y matriz-vector
+
+- La multiplicación matriz-matriz se realiza de nuevo con el operador*. 
+
+- Como los vectores son un caso especial de las matrices, también se manejan implícitamente, de modo que 
+  el producto matriz-vector es en realidad un caso especial del producto matriz-matriz, y lo mismo ocurre con el         producto vector-vector exterior. 
+
+- Por lo tanto, todos estos casos se manejan con sólo dos operadores:
+
+        operador binario * como en a*b
+        operador compuesto *= como en a*=b (multiplica por la derecha: a*=b equivale a a = a*b)
+        
+        
+Producto punto y producto cruz
+
+- Para el producto punto y el producto cruz, se necesitan los métodos dot() y cross(). 
+
+- Por supuesto, el producto punto también se puede obtener como una matriz 1x1 como u.adjoint()*v.
+
+- Recuerda que el producto cruzado es sólo para vectores de tamaño 3. 
+
+- El producto punto es para vectores de tamaño 2. 
+
+- El producto punto es para vectores de cualquier tamaño.
+
+
+Operaciones aritméticas básicas de reducción
+
+- Eigen también proporciona algunas operaciones de reducción para reducir una matriz o vector dados a un 
+  único   valor, como la suma (calculada por sum()), el producto (prod()), o el máximo (maxCoeff()) y el mínimo (minCoeff()) de todos sus coeficientes.
+  
+- La traza de una matriz, devuelta por la función trace(), es la suma de los coeficientes diagonales y 
+  también   puede calcularse con la misma eficacia utilizando a.diagonal().sum().
+
+- También existen variantes de las funciones minCoeff y maxCoeff que devuelven las coordenadas del 
+  coeficiente  respectivo a través de los argumentos.
+
+
+
+Cálculo de normas
+
+- La norma (euclidiana) al cuadrado de un vector puede obtenerse mediante squaredNorm(). 
+
+- Es igual al producto punto del vector por sí mismo, y equivalentemente a la suma de los valores absolutos 
+  al  cuadrado de sus coeficientes.
+
+- Eigen también proporciona el método norm(), que devuelve la raíz cuadrada de squaredNorm().
+
+- Estas operaciones también pueden operar sobre matrices; en ese caso, una matriz n por p se considera un 
+  vector de tamaño (n*p), por lo que, por ejemplo, el método norm() devuelve la norma "Frobenius" o "Hilbert-Schmidt".
+  
+  
+Reducciones booleanas
+
+- Las siguientes reducciones operan sobre valores booleanos:
+
+   all() devuelve verdadero si todos los coeficientes  de una matriz dada se evalúan como verdaderos.
+ 
+   any() devuelve verdadero si al menos uno de los coeficientes de una Matriz dada es verdadero .
+
+   count() devuelve el número de coeficientes de una Matriz dada cuyo valor es verdadero.
+
+
+
+Transformaciones espaciales
+
+- El módulo Geometría de Eigen proporciona dos tipos diferentes de transformaciones geométricas:
+
+    Transformaciones abstractas, como rotaciones (representadas por ángulo y eje o por un cuaternión), traslaciones, escalados. 
+
+    Matrices de transformación proyectivas o afines: véase la clase Transform.
+    
+    
+    -> 2D rotation from an angle : Rotation2D<float> rot2(angle_in_radian);
+    -> 3D rotation as an angle + axis : AngleAxis<float> aa(angle_in_radian, Vector3f(ax,ay,az));
+    -> 3D rotation as a quaternion : Quaternion<float> q; q = AngleAxis<float>(angle_in_radian, axis);
+    -> N-D Scaling : Scaling(sx, sy);
+                     Scaling(sx, sy, sz);
+                     Scaling(s);
+                     Scaling(vecN);
+    
+    -> N-D Translation : Translation<float, 2>(tx, ty);
+                         Translation<float, 3>(tx, ty, tz);
+                         Translation<float, N>(s);
+                         Translation<float, N>(vecN);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
