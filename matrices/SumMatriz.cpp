@@ -25,20 +25,26 @@ int main(){
     for (int i=0; i<rows;i++){
         s(i) = m.row(i).sum();
     }
-    for (int i=0; i<cols;i++){
-        s(i) = m.col(i).sum();
-    }
     std::cout<<"The sum of rows is: "<<s<<std::endl;
     double maxRowSum = s.maxCoeff();
     std::cout<<"The maxium sum of rows is: "<<maxRowSum<<std::endl;
-
-    std::cout<<"The sum of colums is: "<<s<<std::endl;
+    
+    for (int i=0; i<cols;i++){
+        s(i) = m.col(i).sum();
+    }
+    std::cout<<"The sum of colums is: "<<std::endl<<s.transpose()<<std::endl;
+    
     double maxColSum = s.maxCoeff();
     std::cout<<"The maxium sum of colums is: "<<maxColSum<<std::endl;
     
-    double maxRowColSum = maxRowSum > maxColSum ? maxRowSum : maxColSum;
-    std::cout<<"The maxium sum of rows or colums is: "<<maxRowColSum<<std::endl;
+    double maxSum = maxRowSum > maxColSum ? maxRowSum : maxColSum;
+    double sumMainDiag = m.diagonal().sum();
+    std::cout<<"The maxium sum of the diagonal is: "<<sumMainDiag<<std::endl;
+    
+    double sumSecDiag = m.colwise().reverse().diagonal().sum();
+    std::cout<<"The sum of the secondary diagonal is: "<<sumSecDiag<<std::endl;
 }
+
             
     
     
