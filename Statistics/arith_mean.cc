@@ -6,7 +6,7 @@ int main(int argc,char** argv){
     int cantidad_num = 0, element;
     std::cin>>element;
     
-    while (element > 0){
+    while (!std::cin.eof()){ // Cuando se aprete CTRL + D se parará la ejecución
         cantidad_num += 1;
         suma_num += element;
         std::cin >> element;
