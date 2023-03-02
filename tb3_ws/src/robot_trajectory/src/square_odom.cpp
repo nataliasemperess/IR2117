@@ -11,6 +11,13 @@ void odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg){
 	std::cout<< msg << std::endl;
 }
 
+void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg){
+  double variable_x = msg -> pose.pose.position.x;
+  double variable_y = msg -> pose.pose.position.y;
+  std::cout<<"x : "<<variable_x<<std::endl;
+  std::cout<<"y : "<<variable_y<<std::endl;
+}
+
 int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
