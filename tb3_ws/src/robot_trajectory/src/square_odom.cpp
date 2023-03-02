@@ -16,6 +16,18 @@ void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg){
   double variable_y = msg -> pose.pose.position.y;
   std::cout<<"x : "<<variable_x<<std::endl;
   std::cout<<"y : "<<variable_y<<std::endl;
+  
+  double x1 = msg-> pose.pose.orientation.x;
+  double y1 = msg-> pose.pose.orientation.y;
+  double z1 = msg->pose.pose.orientation.z;
+  double w1 = msg-> pose.pose.orientation.w;
+
+
+  double siny_cosp = 2 * (w1 * z1 + x1 * y1);
+  double cosy_cosp = 1 - 2 * (y1 * y1 + z1 * z1);
+  double yaw = atan2(siny_cosp, cosy_cosp);
+  std::cout<<"angle : "<<yaw<<std::endl;
+	
 }
 
 int main(int argc, char * argv[])
