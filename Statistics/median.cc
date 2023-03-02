@@ -1,9 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 int main(int argc,char** argv){
     
-    double arith_mean = 0, suma_num = 0;
+    double median = 0, suma_num = 0;
     int cantidad_num = 0, element;
     std::vector<int> elements;
     std::cin>>element;
@@ -13,8 +14,16 @@ int main(int argc,char** argv){
         cantidad_num += 1;
         std::cin >> element;
     }
-    std::cout<<"Median: "<<arith_mean<<std::endl;
+    std::sort(elements.begin(), elements.end());
+    int middle = (elements.size()/2);
+    if (elements.size()%2 == 0){
+        median = double (elements[middle] + elements[middle + 1])/2;
+    } else{
+        median = double (elements[middle]);
+    }
+    std::cout<<"Median: "<< median << std::endl;
     return 0;
+    
 }
     
     
