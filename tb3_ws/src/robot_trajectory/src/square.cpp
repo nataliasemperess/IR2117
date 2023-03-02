@@ -1,3 +1,4 @@
+#include <iostream>
 #include <chrono>
 #include <cmath>
 #include "rclcpp/rclcpp.hpp"
@@ -9,7 +10,7 @@ int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
   auto node = rclcpp::Node::make_shared("publisher");
-  auto publisher = node->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
+  auto square = node->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
   node -> declare_parameter("linear_speed", 0.1);
   node -> declare_parameter("angular_speed", 3.1416 / 20);
   geometry_msgs::msg::Twist message;
@@ -22,7 +23,7 @@ int main(int argc, char * argv[])
 	while (rclcpp::ok() && (i<n)){
 	   message.linear.x = linear_speed;
 	   message.angular.z = 0.0;
-	   publisher->publish(message);
+	   square->publish(message);
 	   rclcpp::spin_some(node);
 	   loop_rate.sleep();
 	   i++;
