@@ -9,8 +9,12 @@ int main(){
         std::cout<<"El valor de a no es correcto, vuelva a intentarlo: ";
         std::cin >> a;
     }
+    
     std::cout<<"Introduce b : "; std::cin>>b;
-
+    while (b < 1){
+        std::cout<<"El valor de b no es correcto, vuelva a intentarlo: ";
+        std::cin >> a;
+    }
     for (long int i = a; i <= b; i++){
         suma += 1;
     }   
