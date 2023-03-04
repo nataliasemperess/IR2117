@@ -10,7 +10,12 @@ int main(){
     int numero;
     std::cout<<"Introduce un número: ";
     std::cin >> numero;
-    std::cout<<"El número introducido es: "<<numero<<", por tanto, la suma es: "<<suma(numero)<<std::endl;
+    if (numero >= 1){
+        std::cout<<"El número introducido es: "<<numero<<", por tanto, la suma es: "<<suma(numero)<<std::endl;
+    }
+    else{
+        std::cout<<"El número introducido no es admitido"<<std::endl;
+    }
     return 0;
 }
     
