@@ -11,7 +11,7 @@ int main(){
     }
     
     std::cout<<"Introduce b : "; std::cin>>b;
-    while (b < 1){
+    while (b < 1 || b < a){
         std::cout<<"El valor de b no es correcto, vuelva a intentarlo: ";
         std::cin >> b;
     }
