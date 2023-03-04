@@ -13,7 +13,7 @@ int main(){
     std::cout<<"Introduce b : "; std::cin>>b;
     while (b < 1){
         std::cout<<"El valor de b no es correcto, vuelva a intentarlo: ";
-        std::cin >> a;
+        std::cin >> b;
     }
     for (long int i = a; i <= b; i++){
         suma += 1;
