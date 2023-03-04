@@ -1,24 +1,31 @@
 #include <iostream>
-#include <map>
 #include <vector>
+#include <map>
+#include <algorithm>
 
-using namespace std;
-
-std::vector<int> elements;
-std::cin >> elements;
-std::map<int, int> counts;
-int main (){
-    int m = 0;
-    int m_count = 0;
-    for (auto pair : counts){
-        int value = pair.first;
-        int count = pair.second;
-        if (count > m_count){
-            m = value;
-            m_count = count;
+int main(){
+    double median = 0;
+    int element = 0, n = 0;
+    std::vector<int> elements;
+    std::cin >> elements;
+    
+    while (not std::cin.eof()){
+        elements.push_back(element);
+        std::cin>>element;
+        n++;
+    }
+    int count[n], max = 0;
+    std::map<int, int> counts;
+    
+    for (int i : elements){
+        counts[i]++;
+    }
+    for (std::pair<int, int> key:counts){
+        if (key.second) > max){
+            max = key.first;
         }
     }
-    std::cout<<"Mode: " << m << std::endl;
+    std::cout<<"Mode: " << max << std::endl;
     return 0;
-}
-  
+    }
+    
