@@ -1,0 +1,156 @@
+cmake_minimum_requiered(VERSION 3.5)
+project(examples_topics)
+
+
+# Por defecto a C++ 14
+
+if(NOT CMAKE_CXX_STANDARD)
+   set (CMAKE_CXX_STANDARD 14)
+endif()
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    add_compile_options(-Wall -Wextra -Wpedantic)
+endif
+
+
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+
+
+add_executable(publisher publisher.cpp)
+ament_target_dependencies(publisher rclcpp std_msgs)
+
+add_executable(subscriber subscriber.cpp)
+ament_tarjet_dependencies(subscriber rclcpp std_msgs)
+
+install(TARGETS
+    publisher
+    subscriber
+    DESTINATION lib/${PROJECT_NAME}
+)
+ament_package()
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+CMakeLists.txt
+
+El archivo CMakeLists.txt son las instrucciones del sistema para construir paquetes de software.
+Cualquier paquete contiene un archivo CMakeLists.txt que describe cómo construir el código y dónde instalarlo.
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+El esquema básico del CMakeLIsts.txt de un paquete ament contiene:
+
+cmake_minimum_requiered(VERSION 3.5)
+project(my_project)
+
+ament_package()
+
+
+El argumento para project será el nombre del paquete y debe ser idéntico al nombre del paquete en el package.xml
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Opciones del compilador y del enlazador
+
+ROS2 se dirige a compiladores que cumplen con el estándar C++14 y 99 hasta al menos crystal clemmys.
+
+Por lo tanto, es habitual establecer las banderas CMake correspondientes:
+
+if (NOT CMAKE_C_STANDARD)
+    set (CMAKE_C_STANDARD 99)
+endif()
+if (NOT CMAKE_CXX_STANDARD)
+    set (CMAKE_CXX_STANDARD 14)
+endif()
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Añadir objetivos
+
+Hay dos objetivos principales para construir: bibliotecas y ejecutables que son construidos por add_library y add_executable respectivamente.
+Sólo los archivos cpp se referencian explícitamente en la llamada a add_library o add_executable.
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+Añadir dependencias
+
+Hay dos formas de vincular sus paquetes a una nueva dependencia.
+
+La primera y recomendada es usar la macro ament ament_tarjet_dependencies.
+
+Como ejemplo, supongamos que queremos enlazar my_target con la librería de álgebra lineal Eigen3.
+
+find_package(Eigen3 REQUIRED)
+ament_target_dependencies(my_target Eigen3)
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+Instalar ejecutables
+
+La función install() toma los argumentos
+
+TARGETS 			
+- qué objetivos instalar
+
+DESTINATION 	
+- Carpeta para almacenar los objetivos ejecutables
+-----------------------------------------------------------------------------------------------------------------------------------------
+COLCON BUILD
+
+colcon es una iteración de las herramientas de construcción de ROS catkin_make, catkin_tools y ament_tools. 
+
+En la raíz del espacio de trabajo, ejecute colcon build. 
+
+Cuando colcon haya completado la construcción con éxito, el resultado estará en el directorio de instalación.
+
+Antes de poder utilizar cualquiera de los ejecutables instalados, necesitarás añadirlos a tu ruta con:
+
+source install/setup.bash
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+source /opt/ros/foxy/setup.bash
+
+Durante la instalación y el uso de ROS, verá que  se le pide que cree uno de varios archivos setup.bash.
+
+El archivo setup.bash es simplemente añadir variables de entorno a su ruta para permitir que ROS funcione.
+
+Tendrá que ejecutar este comando en cada nuevo shell que abra para tener acceso a los comandos ROS.
+
+Este proceso te permite instalar varias distribuciones de ROS (por ejemplo, noetic y foxy) en el mismo ordenador y cambiar entre ellas.
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+CMake
+
+- CMake es un generador de sistemas de compilación multiplataforma. 
+
+- Los proyectos especifican su proceso de compilación con archivos CMakeLists.txt independientes de la plataforma. 
+
+- Los usuarios construyen un proyecto utilizando CMake para generar un sistema de construcción para una herramienta nativa en su plataforma, por ejemplo, Makefiles o proyectos de Visual Studio.
+
+
+Catkin
+
+- Catkin está basado en CMake y proporciona un conjunto de funciones para facilitar la escritura de paquetes CMake. 
+
+- Automatiza la generación de archivos de configuración CMake así como archivos pkg-config. 
+
+- Además, proporciona funciones para registrar diferentes tipos de pruebas.
+
+- Un paquete que utiliza catkin especifica sus metadatos en un archivo de manifiesto llamado package.xml. 
+
+- El último formato del archivo de manifiesto se especifica en el ROS REP 149.
+
+
+ament_cmake
+
+- Ament_cmake es una evolución de catkin y también está basado en CMake. 
+
+- La principal diferencia entre ament_cmake y catkin se describe en otro artículo. 
+
+- En el contexto de la herramienta de compilación, la mayor diferencia es que ament_cmake genera archivos específicos del paquete para configurar el entorno de uso del paquete una vez compilado e instalado.
+
+- Un paquete que utiliza ament_cmake utiliza el mismo archivo de manifiesto que catkin (excepto que requiere la versión 2 o superior del formato).
