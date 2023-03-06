@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<?xml-model href="http:://download.ros.org/schema/package_format2.xsd" 
+schematypens="http://www.w3.org/2001/XMLSchema?>
+
+<package format="2">
+    <name>examples_topics</name>
+    <version>0.0.1</version>
+    <description>Examples of topics publisher and subscriber</description>
+    
+    <maintainer> email="al415537@uji.es"> Natalia Sempere</maintainer>
+    
+    <license> Apache License 2.0</license>
+    
+    <author email="al415537@uji.es">Natalia Sempere</author>
+    
+    <buildtool_depend>ament_cmake</buildtool_depend>
+    
+    <build_depend>rclcpp</build_depend>
+    <build_depend>std_msgs</build_depend>
+    
+    <exec_depend>rclcpp</exec_depend>
+    <exec_depend>std_msgs</exec_depend>
+    
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+</package>
+
+---------------------------------------------------------------------------------------
+Un espacio de trabajo es un directorio que contiene paquetes de ROS2.
+
+Un package puede ser considerado un contenedor para su código ROS2.
+Un espacio de trabajo trivial podría ser así:
+
+workspace_folder/
+    src/
+        package_1/
+            CMakeLists.txt
+            package.xml
+            
+        package_2/
+            setup.py
+            package.xml
+            
+        ...
+        
+        package_n/
+            CMakeLists.txt
+            package.xml
+--------------------------------------------------------------------------
+
+Package manifest
+
+Es un archivo XML llamado package.xml que debe incluirse con la carpeta raíz de cualquier paquete. 
+
+Este archivo define propiedades sobre el paquete como el nombre del paquete, números de versión, autores, mantenedores y dependencias de otros paquetes.
+
+Estructura básica
+
+Cada archivo package.xml tiene la etiqueta <package> como etiqueta raíz del documento.
+    
+    <package format="2">
+    </package>
+    
+Etiquetas obligatorias
+
+<package> para que el manifiesto del paquete esté completo.
+<name> - El nombre del paquete
+<version> - Número de versión del paquete
+(deben ser 3 números enteros separados por puntos)
+<description> - Una descripción del contenido del paquete
+<maintainer> - El nombre de la(s) persona(s) que está(n) mantiene el paquete
+<licencia> - La(s) licencia(s) de software (por ejemplo, GPL, BSD, ASL) bajo la(s) cual(es) se libera el código. 
+    
+    
+    
+Dependencias
+
+Los paquetes pueden tener varios tipos de dependencias:
+
+-> Build Tool Dependencies especifican las herramientas del sistema de construcción que este paquete necesita para construirse.
+
+-> Build Dependencies especifican qué paquetes son necesarios para compilar este paquete. Este es el caso cuando cualquier archivo de estos paquetes es necesario en tiempo de compilación. Esto puede ser incluir cabeceras de estos paquetes en tiempo de compilación, enlazar con librerías de estos paquetes, etc.
+
+->Exection Dependencies especifican qué paquetes son necesarios para ejecutar el código de este paquete. Este es el caso cuando se depende de bibliotecas compartidas en este paquete.
+                            
+                            
+Integrar sistemas de compilación arbitrarios
+
+Cada paquete puede utilizar un sistema de compilación diferente para realizar los pasos de configuración, compilación e instalación. El tipo de compilación se define en el manifiesto de cada paquete mediante la etiqueta build_type en la sección de exportación.
+
+
+
+                            
+                            
+                
