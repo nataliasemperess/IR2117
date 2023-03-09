@@ -73,16 +73,12 @@ int main(int argc, char * argv[])
 	   rclcpp::spin_some(node);
 	   loop_rate.sleep();
 	 }
-	  
-	  int i=0;
-	  int n=(M_PI)/(0.001*angular_speed);
-	  while (rclcpp::ok() && (i<n)){
+	  while (rclcpp::ok() && (dif_angulo < (M_PI)/2)){
 	    message.linear.x = 0;
 	    message.angular.z = angular_speed;
 	    square_odom->publish(message);
 	    rclcpp::spin_some(node);
 	    loop_rate.sleep();
-	    i++;
 	  }
 	  
   }

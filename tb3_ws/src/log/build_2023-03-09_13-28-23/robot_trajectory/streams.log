@@ -1,0 +1,14 @@
+[0.016s] Invoking command in '/home/usuario/Documentos/GitHub/IR2117/tb3_ws/src/build/robot_trajectory': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/usuario/Documentos/GitHub/IR2117/tb3_ws/src/build/robot_trajectory -- -j6 -l6
+[0.053s] [35m[1mScanning dependencies of target square_odom[0m
+[0.072s] [ 50%] [32mBuilding CXX object CMakeFiles/square_odom.dir/src/square_odom.cpp.o[0m
+[1.234s] [01m[K/home/usuario/Documentos/GitHub/IR2117/tb3_ws/src/robot_trajectory/src/square_odom.cpp:[m[K In function ‘[01m[Kint main(int, char**)[m[K’:
+[1.234s] [01m[K/home/usuario/Documentos/GitHub/IR2117/tb3_ws/src/robot_trajectory/src/square_odom.cpp:76:51:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[K)[m[K’ token
+[1.234s]    76 |    while (rclcpp::ok() && (dif_angulo < (M_PI)/2))[01;31m[K)[m[K{
+[1.234s]       |                                                   [01;31m[K^[m[K
+[1.234s] [01m[K/home/usuario/Documentos/GitHub/IR2117/tb3_ws/src/robot_trajectory/src/square_odom.cpp:67:10:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kangular_speed[m[K’ [[01;35m[K-Wunused-variable[m[K]
+[1.234s]    67 |   double [01;35m[Kangular_speed[m[K = node->get_parameter("angular_speed").get_parameter_value().get<double>();
+[1.234s]       |          [01;35m[K^~~~~~~~~~~~~[m[K
+[2.745s] make[2]: *** [CMakeFiles/square_odom.dir/build.make:63: CMakeFiles/square_odom.dir/src/square_odom.cpp.o] Error 1
+[2.745s] make[1]: *** [CMakeFiles/Makefile2:78: CMakeFiles/square_odom.dir/all] Error 2
+[2.745s] make: *** [Makefile:141: all] Error 2
+[2.747s] Invoked command in '/home/usuario/Documentos/GitHub/IR2117/tb3_ws/src/build/robot_trajectory' returned '2': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/usuario/Documentos/GitHub/IR2117/tb3_ws/src/build/robot_trajectory -- -j6 -l6
