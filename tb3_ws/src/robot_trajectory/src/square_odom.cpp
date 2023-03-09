@@ -7,11 +7,14 @@
 
 using namespace std::chrono_literals;
 
+bool ayuda = false;
+
 void odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg){
 	std::cout<< msg << std::endl;
 }
 
 void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg){
+  
   double variable_x = msg -> pose.pose.position.x;
   double variable_y = msg -> pose.pose.position.y;
   std::cout<<"x : "<<variable_x<<std::endl;
@@ -27,6 +30,13 @@ void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg){
   double cosy_cosp = 1 - 2 * (y1 * y1 + z1 * z1);
   double yaw = atan2(siny_cosp, cosy_cosp);
   std::cout<<"angle : "<<yaw<<std::endl;
+  
+  if (not ayuda){
+    double variable_x0 = msg -> pose.pose.position.x;
+    double variable_y0 = msg -> pose.pose.position.y;
+    double yaw_inicial = atan2(siny_cosp, cosy_cosp);
+    ayuda = true;
+    }  	
 	
 }
 
