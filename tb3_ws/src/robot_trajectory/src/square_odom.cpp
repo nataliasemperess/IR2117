@@ -8,6 +8,7 @@
 using namespace std::chrono_literals;
 
 bool ayuda = false;
+double variable_x0, variable_y0, yaw_inicial;
 
 void odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg){
 	std::cout<< msg << std::endl;
@@ -19,6 +20,8 @@ void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg){
   double variable_y = msg -> pose.pose.position.y;
   std::cout<<"x : "<<variable_x<<std::endl;
   std::cout<<"y : "<<variable_y<<std::endl;
+  
+  
   
   double x1 = msg-> pose.pose.orientation.x;
   double y1 = msg-> pose.pose.orientation.y;
@@ -35,8 +38,13 @@ void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg){
     double variable_x0 = msg -> pose.pose.position.x;
     double variable_y0 = msg -> pose.pose.position.y;
     double yaw_inicial = atan2(siny_cosp, cosy_cosp);
+   
     ayuda = true;
-    }  	
+   }  
+   double distancia_posiciones_x = variable_x - variable_x0;
+   double distancia_posiciones_y = variable_y - variable_y0;
+   double total_dif_pos = sqrt(pow(distancia_posiciones_x, 2) + pow(distancia_posiciones_y, 2));
+   std::cout<<"La distancia entre la posicion actual y la inicial es : "<<total_dif_pos<<std::endl;	
 	
 }
 
