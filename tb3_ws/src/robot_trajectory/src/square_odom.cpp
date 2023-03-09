@@ -8,7 +8,7 @@
 using namespace std::chrono_literals;
 
 bool ayuda = false;
-double variable_x0, variable_y0, yaw_inicial;
+double variable_x0, variable_y0, yaw_inicial,total_dif_pos, dif_angulo;
 
 void odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg){
 	std::cout<< msg << std::endl;
@@ -35,17 +35,17 @@ void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg){
   std::cout<<"angle : "<<yaw<<std::endl;
   
   if (not ayuda){
-    double variable_x0 = msg -> pose.pose.position.x;
-    double variable_y0 = msg -> pose.pose.position.y;
-    double yaw_inicial = atan2(siny_cosp, cosy_cosp);
+    variable_x0 = msg -> pose.pose.position.x;
+    variable_y0 = msg -> pose.pose.position.y;
+    yaw_inicial = atan2(siny_cosp, cosy_cosp);
     ayuda = true;
    }  
    double dif_posiciones_x = variable_x - variable_x0;
    double dif_posiciones_y = variable_y - variable_y0;
-   double total_dif_pos = sqrt(pow(dif_posiciones_x, 2) + pow(dif_posiciones_y, 2));
+   total_dif_pos = sqrt(pow(dif_posiciones_x, 2) + pow(dif_posiciones_y, 2));
    std::cout<<"La distancia entre la posicion actual y la inicial es : "<<total_dif_pos<<std::endl;	
    
-   double dif_angulo = abs(yaw - yaw_inicial);
+   dif_angulo = abs(yaw - yaw_inicial);
    std::cout<<"La diferencia entre el angulo actual con el inicial es: "<<std::endl;
 	
 }
@@ -66,18 +66,16 @@ int main(int argc, char * argv[])
   double linear_speed = node->get_parameter("linear_speed").get_parameter_value().get<double>();
   double angular_speed = node->get_parameter("angular_speed").get_parameter_value().get<double>();
   for(int j=0; j<4; j++){
-	int i = 0, n = 1/(0.001*linear_speed);
-	while (rclcpp::ok() && (i<n)){
+	while (rclcpp::ok() && (total_dif_pos < 1.0)){
 	   message.linear.x = linear_speed;
 	   message.angular.z = 0.0;
 	   square_odom->publish(message);
 	   rclcpp::spin_some(node);
 	   loop_rate.sleep();
-	   i++;
 	 }
 	  
-	  i=0;
-	  n=(M_PI)/(0.001*angular_speed);
+	  int i=0;
+	  int n=(M_PI)/(0.001*angular_speed);
 	  while (rclcpp::ok() && (i<n)){
 	    message.linear.x = 0;
 	    message.angular.z = angular_speed;
