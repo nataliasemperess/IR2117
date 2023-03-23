@@ -20,11 +20,13 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 
 add_executable(wandering src/wandering.cpp)
 ament_target_dependencies(wandering rclcpp geometry_msgs)
 ament_target_dependencies(wandering rclcpp nav_msgs)
+ament_target_dependencies(wandering rclcpp sensor_msgs)
 
 install(TARGETS
     wandering
