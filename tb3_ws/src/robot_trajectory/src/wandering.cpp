@@ -16,7 +16,7 @@ int main(int argc, char * argv[])
   rclcpp::init(argc, argv);
   auto node = rclcpp::Node::make_shared("wandering");
   auto publisher = node->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
-  auto subscripcion = node->create_subscription<sensor_msgs::msg::LaserScan>("/scan", 10, wandering_callback);
+  auto subscripcion = node->create_subscription<sensor_msgs::msg::LaserScan>("scan", 10, wandering_callback);
   geometry_msgs::msg::Twist message;
   auto publish_count = 0;
   rclcpp::WallRate loop_rate(10ms);
