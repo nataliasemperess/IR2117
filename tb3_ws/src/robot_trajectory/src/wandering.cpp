@@ -1,11 +1,12 @@
 #include <chrono>
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
-#include "sensor_msgs/msg/laserscan.hpp"
+#include "geometry_msgs/msg/twist.hpp"
+#include "sensor_msgs/msg/laser_scan.hpp"
 
 using namespace std::chrono_literals;
 
-void wandering_callback(const sensor_msgs::msg::LaserScan msg){
+void wandering_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
 	std::cout<< msg << std::endl;
 }
 
@@ -14,13 +15,15 @@ int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
   auto node = rclcpp::Node::make_shared("wandering");
-  auto publisher = node->create_publisher<sensor_msgs::msg::LaserScan>("cmd_vel", 10);
-  sensor_msgs::msg::LaserScan message;
+  auto publisher = node->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
+  auto subscripcion = node->create_subscription<sensor_msgs::msg::LaserScan>("/scan", 10, wandering_callback);
+  geometry_msgs::msg::Twist message;
   auto publish_count = 0;
   rclcpp::WallRate loop_rate(10ms);
 
   while (rclcpp::ok()) {
-    message.data = "Hello, world! " + std::to_string(publish_count++);
+    message.linear.x = 0.0;
+    message.angular.z = 0.0;
     publisher->publish(message);
     rclcpp::spin_some(node);
     loop_rate.sleep();
