@@ -7,15 +7,14 @@
 using namespace std::chrono_literals;
 
 void wandering_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
-	std::cout<< msg << std::endl; 
-       double rango1 = msg-> ranges[0];
-       double rango2 = msg-> ranges[90];
-       double rango3 = msg-> ranges[180];
-       double rango4 = msg-> ranges[270];
-       std::cout<<"Rango 1 : "<<rango1<<std::endl;
-       std::cout<<"Rango 2 : "<<rango2<<std::endl;
-       std::cout<<"Rango 3 : "<<rango3<<std::endl;
-       std::cout<<"Rango 4 : "<<rango4<<std::endl;
+
+       for (int i = 0; i <= 9; i++){
+          double vector = msg -> ranges[i];
+          std::cout<<"Rangos: "<<vector<<std::endl;}
+       for (int j = 350; j <= 359; j++){
+          double vector = msg -> ranges[j];
+          std::cout<<"Rangos: "<<vector<<std::endl;}
+
 }
 
 
