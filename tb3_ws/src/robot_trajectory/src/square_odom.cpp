@@ -7,7 +7,7 @@
 
 using namespace std::chrono_literals;
 
-double distance_x_ini_actual, distance_y_ini_actual, distance_ini_actual, distance_yaw_ini_actual,variable_x_ini,variable_y_ini,yaw_ini;
+double distance_x1_actual, distance_y1_actual, distance1_actual, distance_yaw1_actual,variable_x_ini,variable_y_ini,yaw_ini;
 
 bool prueba = false;
 
@@ -34,12 +34,12 @@ void topic_callback(const nav_msgs::msg::Odometry::SharedPtr msg){
    	 yaw_ini = atan2(siny_cosp, cosy_cosp);
    	 prueba = true;
     }
-    distance_x_ini_actual = variable_x - variable_x_ini;
-    distance_y_ini_actual = variable_y - variable_y_ini;
-    distance_ini_actual = sqrt(pow(distance_x_ini_actual,2)+ pow(distance_y_ini_actual,2));
-    std::cout<<"The distance between position initial and actual is : "<<distance_ini_actual<<std::endl;
+    distance_x1_actual = variable_x - variable_x_ini;
+    distance_y1_actual = variable_y - variable_y_ini;
+    distance1_actual = sqrt(pow(distance_x1_actual,2)+ pow(distance_y1_actual,2));
+    std::cout<<"La distancia entre la posición inicial y actual es : "<<distance1_actual<<std::endl;
     distance_yaw_ini_actual = abs(yaw - yaw_ini);
-    std::cout<<"The distance between angle initial and actual is : "<<distance_yaw_ini_actual<<std::endl;    
+    std::cout<<"La distancia entre el angulo incial y el actual es : "<<distance_yaw_ini_actual<<std::endl;    
 }
 
 int main(int argc, char * argv[])
@@ -56,8 +56,8 @@ int main(int argc, char * argv[])
   double linear_speed = node->get_parameter("linear_speed").get_parameter_value().get<double>();
   double angular_speed = node->get_parameter("angular_speed").get_parameter_value().get<double>();
   for(int j=0; j<4; j++){
-      distance_ini_actual = 0.0;
-      while (rclcpp::ok() && (distance_ini_actual<1)) {
+      distance1_actual = 0.0;
+      while (rclcpp::ok() && (distance1_actual<1)) {
     	message.linear.x = linear_speed;
     	message.angular.z = 0.0;
     	square_odom->publish(message);
