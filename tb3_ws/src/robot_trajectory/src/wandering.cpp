@@ -5,7 +5,8 @@
 #include "sensor_msgs/msg/laser_scan.hpp"
 
 using namespace std::chrono_literals;
-int min_i = 0; min_j= 0;
+
+int min_i = 0, min_j= 0;
 
 void wandering_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
 	
