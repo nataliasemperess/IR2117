@@ -25,8 +25,10 @@ void wandering_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
           
     // Versión 5 : mover robot y parar cuando se encuentre un objeto a < de 1 metro.
     
+    parada = false;
     if (vector[0] < 1){
         parada = true;}
+
           
     // Versión 4 : Calcular y mostrar el mínimo del vector:
     
@@ -50,9 +52,20 @@ int main(int argc, char * argv[])
   auto publish_count = 0;
   rclcpp::WallRate loop_rate(10ms);
 
-  while (rclcpp::ok() && (parada is false)) {
+  while (rclcpp::ok() && (parada is false)) { // recto
     message.linear.x = 0.5;
     message.angular.z = 0.0;
+    publisher->publish(message);
+    rclcpp::spin_some(node);
+    loop_rate.sleep();
+  }
+  rclcpp::shutdown();
+  return 0;
+}
+
+  while (rclcpp::ok() && (parada is true)) { //Para poder girar a la izquierda
+    message.linear.x = 0.0;
+    message.angular.z = 0.5;
     publisher->publish(message);
     rclcpp::spin_some(node);
     loop_rate.sleep();
