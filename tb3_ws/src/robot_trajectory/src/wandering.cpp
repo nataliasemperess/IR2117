@@ -9,7 +9,8 @@
 using namespace std::chrono_literals;
 
 std::vector<float> vector;
-int min;
+float min;
+bool parada = false;
 
 void wandering_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
 	
@@ -22,7 +23,10 @@ void wandering_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
           double vector = msg -> ranges[j];
           std::cout<<"Rangos: "<<vector<<std::endl;}
           
-          
+    // Versión 5 : mover robot y parar cuando se encuentre un objeto a < de 1 metro.
+    
+    if (vector[0] < 1){
+        parada = true;}
           
     // Versión 4 : Calcular y mostrar el mínimo del vector:
     
@@ -46,8 +50,8 @@ int main(int argc, char * argv[])
   auto publish_count = 0;
   rclcpp::WallRate loop_rate(10ms);
 
-  while (rclcpp::ok()) {
-    message.linear.x = 0.0;
+  while (rclcpp::ok() && (parada is false)) {
+    message.linear.x = 0.5;
     message.angular.z = 0.0;
     publisher->publish(message);
     rclcpp::spin_some(node);
