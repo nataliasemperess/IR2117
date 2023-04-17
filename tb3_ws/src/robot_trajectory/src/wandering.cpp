@@ -9,8 +9,9 @@
 using namespace std::chrono_literals;
 
 std::vector<float> vector;
-float min;
+float min, min_rang1, min_rang2;
 bool parada = false;
+float giro;
 
 void wandering_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
 	
@@ -30,14 +31,18 @@ void wandering_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
         parada = true;}
 
           
-    // Versión 4 : Calcular y mostrar el mínimo del vector:
+    // Versión 7 : Calcular mínimo de los rangos anteriores (modificando versión 4)
     
-    Eigen::Map<Eigen::VectorXf> vector_Eigen(vector.data(), vector.size());
+    Eigen::Map<Eigen::VectorXf> vector_rang1(vector.data(), vector.size());
+    Eigen::Map<Eigen::VectorXf> vector_rang2(vector.data() + 350, vector.size());
+   
+    // Versión 7 : Guardando los mínimos en variables globales y mostrandolas
     
-    min = vector_Eigen.minCoeff();
+    min_rang1 = vector_rang1.minCoeff();
+    min_rang2 = vector_rang2.minCoeff();
     
-    std::cout<<"El mínimo del vector es: "<<min<<std::endl;
-    
+    std::cout<<"El mínimo del vector en el rango [0-9] es : "<<min_rang1<<std::endl;
+    std::cout<<"El mínimo del vector en el rango [350-359] es : "<<min_rang2<<std::endl;
    
 }
 
@@ -63,9 +68,18 @@ int main(int argc, char * argv[])
   return 0;
 }
 
-  while (rclcpp::ok() && (parada is true)) { //Para poder girar a la izquierda
+// Versión 7 : para elegir la dirección de giro
+
+if (min_rang1 > min_rang){
+    giro = 0.5; }
+else{
+    giro = -0.5;
+}
+// Versión 6 : Girar a la izquierda
+
+  while (rclcpp::ok() && (parada is true)) { //Para poder girar a la izquierda/derecha
     message.linear.x = 0.0;
-    message.angular.z = 0.5;
+    message.angular.z = giro;
     publisher->publish(message);
     rclcpp::spin_some(node);
     loop_rate.sleep();
