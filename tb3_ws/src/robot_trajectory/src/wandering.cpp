@@ -9,20 +9,26 @@
 using namespace std::chrono_literals;
 
 std::vector<float> vector;
+
 float min, min_rang1, min_rang2;
+
 bool parada = false;
-float giro;
+bool girar_izq = false;
+bool girar_derech = false;
+
+float giro = 0.3;
 
 void wandering_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
-	
+    
     // Versión 3 : Mostrar el valors del vector ranges:
+    
+	vector = msg -> ranges;
+    
     for (int i = 0; i <= 9; i++){
-          double vector = msg -> ranges[i];
-          std::cout<<"Rangos: "<<vector<<std::endl;}
+        std::cout<<"Rangos[0-9]: "<<vector[i]<<std::endl;}
     
     for (int j = 350; j <= 359; j++){
-          double vector = msg -> ranges[j];
-          std::cout<<"Rangos: "<<vector<<std::endl;}
+          std::cout<<"Rangos[350-359]: "<<vector[i]<<std::endl;}
           
     // Versión 5 : mover robot y parar cuando se encuentre un objeto a < de 1 metro.
     
@@ -34,8 +40,7 @@ void wandering_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
     // Versión 7 : Calcular mínimo de los rangos anteriores (modificando versión 4)
     
     Eigen::Map<Eigen::VectorXd> vector_rang1(vector.data(), 10);
-    Eigen::Map<Eigen::VectorXd> vector_rang2(vector.data() + 350, 10
-    );
+    Eigen::Map<Eigen::VectorXd> vector_rang2(vector.data() + 350, 10);
    
     // Versión 7 : Guardando los mínimos en variables globales y mostrandolas
     
@@ -55,37 +60,58 @@ int main(int argc, char * argv[])
   auto publisher = node->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
   auto subscripcion = node->create_subscription<sensor_msgs::msg::LaserScan>("scan", 10, wandering_callback);
   geometry_msgs::msg::Twist message;
-  auto publish_count = 0;
+  auto publish_count = 0.0;
   rclcpp::WallRate loop_rate(10ms);
-
-  while (rclcpp::ok() && (parada is false)) { // recto
-    message.linear.x = 0.5;
-    message.angular.z = 0.0;
-    publisher->publish(message);
-    rclcpp::spin_some(node);
-    loop_rate.sleep();
+  
+  while (rclcpp::ok()) { // recto
+  
+        if (!girar_derech && !girar_izq){
+            
+            while (rclcpp::ok() && (parada is false)) { // recto
+                message.linear.x = 0.5;
+                message.angular.z = 0.0;
+                publisher->publish(message);
+                rclcpp::spin_some(node);
+                loop_rate.sleep();
+            }
+            
+            if (min_rang1 > min_rang2){
+                girar_izq = true;
+            }else{
+                girar_derech = true;}
+        }
+        
+        if (girar_izq){
+            while (rclcpp::ok() && (parada is true)) { 
+            message.linear.x = 0.0;
+            message.angular.z = giro;
+            publisher->publish(message);
+            rclcpp::spin_some(node);
+            loop_rate.sleep();
+            }
+            girar_izq = false;
+        }
+        
+        
+        if (girar_derech){
+             while (rclcpp::ok() && (parada is true)) { // recto
+                message.linear.x = 0.0;
+                message.angular.z = 0.0 - giro;
+                publisher->publish(message);
+                rclcpp::spin_some(node);
+                loop_rate.sleep();
+            }
+            girar_derech = false;
+        }}
+        message.linear.x = 0.0;
+        message.angular.z = 0.0;
+        publisher->publish(message);
+        rclcpp::spin_some(node);
+        loop_rate.sleep();
+            
   }
   rclcpp::shutdown();
   return 0;
 }
 
-// Versión 7 : para elegir la dirección de giro
-
-if (min_rang1 > min_rang2){
-    giro = 0.5; }
-else{
-    giro = -0.5;
-}
-// Versión 6 : Girar a la izquierda
-
-  while (rclcpp::ok() && (parada is true)) { //Para poder girar a la izquierda/derecha
-    message.linear.x = 0.0;
-    message.angular.z = giro;
-    publisher->publish(message);
-    rclcpp::spin_some(node);
-    loop_rate.sleep();
-  }
-  rclcpp::shutdown();
-  return 0;
-}
 
