@@ -33,8 +33,9 @@ void wandering_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
           
     // Versión 7 : Calcular mínimo de los rangos anteriores (modificando versión 4)
     
-    Eigen::Map<Eigen::VectorXf> vector_rang1(vector.data(), vector.size());
-    Eigen::Map<Eigen::VectorXf> vector_rang2(vector.data() + 350, vector.size());
+    Eigen::Map<Eigen::VectorXd> vector_rang1(vector.data(), 10);
+    Eigen::Map<Eigen::VectorXd> vector_rang2(vector.data() + 350, 10
+    );
    
     // Versión 7 : Guardando los mínimos en variables globales y mostrandolas
     
@@ -70,7 +71,7 @@ int main(int argc, char * argv[])
 
 // Versión 7 : para elegir la dirección de giro
 
-if (min_rang1 > min_rang){
+if (min_rang1 > min_rang2){
     giro = 0.5; }
 else{
     giro = -0.5;
