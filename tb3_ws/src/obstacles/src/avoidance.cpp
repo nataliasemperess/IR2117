@@ -11,6 +11,11 @@ bool front = false;
 bool left = false;
 bool right = false;
 
+enum Estados{
+    S1,S2,S3
+};
+
+Estados estado = S1;
 
 void callback_front(const example_interfaces::msg::Bool::SharedPtr msg){
     front = msg -> data;
@@ -40,38 +45,49 @@ int main(int argc, char * argv[])
   geometry_msgs::msg::Twist message;
   rclcpp::WallRate loop_rate(50ms);
   
-    
-  state = S1;
-  while (...) {
-    switch (state) {
+
+  while (rclcpp::ok()){
+    switch (estado) {  
+        estado = S1;
   case S1:
-    if (input==a) {
-      state = S2;
+    if (front) {
+      estado = S2;
     }
     break;
   case S2:
-    if (input==b) {
-      state = S1;
-    } else if (input==c) {
-      state = S4;
+    if (left) {
+      estado = S3;
+    } else if (!front) {
+        estado = S1;
     }
     break;
-  …
-}
-  }
-
-      
-      
-      
-      
-      
-      
-      
-  publisher->publish(message);
-  rclcpp::spin_some(node);
-  loop_rate.sleep();
-  }
-  rclcpp::shutdown();
-  return 0;
+    
+  case S3:
+    if (!front) {
+      estado = S1;
+    } else if (!front) {
+        estado = S1;
+    }
+    break;
+   }
+   
+   if (estado == S1){
+       message.linear.x = ;
+       message.angular.z = ;
+   }
+   else if (estado == S2){
+       message.linear.x = ;
+       message.angular.z = ;
+   }
+   else if (estado == S3){
+       message.linear.x = ;
+       message.angular.z = ;
+   }
+   publisher->publish(message);
+   rclcpp::spin_some(node);
+   loop_rate.sleep();
+   }
+   rclcpp::shutdown();
+   return 0;
 }
 
