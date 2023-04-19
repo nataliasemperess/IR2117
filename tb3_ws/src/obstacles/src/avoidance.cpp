@@ -11,6 +11,7 @@ bool front = false;
 bool left = false;
 bool right = false;
 
+
 void callback_front(const example_interfaces::msg::Bool::SharedPtr msg){
     front = msg -> data;
 }
@@ -39,7 +40,33 @@ int main(int argc, char * argv[])
   geometry_msgs::msg::Twist message;
   rclcpp::WallRate loop_rate(50ms);
   
-  while (rclcpp::ok()){
+    
+  state = S1;
+  while (...) {
+    switch (state) {
+  case S1:
+    if (input==a) {
+      state = S2;
+    }
+    break;
+  case S2:
+    if (input==b) {
+      state = S1;
+    } else if (input==c) {
+      state = S4;
+    }
+    break;
+  …
+}
+  }
+
+      
+      
+      
+      
+      
+      
+      
   publisher->publish(message);
   rclcpp::spin_some(node);
   loop_rate.sleep();
