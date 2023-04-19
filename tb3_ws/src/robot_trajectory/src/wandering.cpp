@@ -28,7 +28,7 @@ void wandering_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
         std::cout<<"Rangos[0-9]: "<<vector[i]<<std::endl;}
     
     for (int j = 350; j <= 359; j++){
-          std::cout<<"Rangos[350-359]: "<<vector[i]<<std::endl;}
+          std::cout<<"Rangos[350-359]: "<<vector[j]<<std::endl;}
           
     // Versión 5 : mover robot y parar cuando se encuentre un objeto a < de 1 metro.
     
@@ -39,8 +39,8 @@ void wandering_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg){
           
     // Versión 7 : Calcular mínimo de los rangos anteriores (modificando versión 4)
     
-    Eigen::Map<Eigen::VectorXd> vector_rang1(vector.data(), 10);
-    Eigen::Map<Eigen::VectorXd> vector_rang2(vector.data() + 350, 10);
+    Eigen::Map<Eigen::VectorXf> vector_rang1(vector.data(), 10);
+    Eigen::Map<Eigen::VectorXf> vector_rang2(vector.data() + 350, 10);
    
     // Versión 7 : Guardando los mínimos en variables globales y mostrandolas
     
@@ -67,7 +67,7 @@ int main(int argc, char * argv[])
   
         if (!girar_derech && !girar_izq){
             
-            while (rclcpp::ok() && (parada is false)) { // recto
+            while (rclcpp::ok() && (parada == false)) { // recto
                 message.linear.x = 0.5;
                 message.angular.z = 0.0;
                 publisher->publish(message);
@@ -82,7 +82,7 @@ int main(int argc, char * argv[])
         }
         
         if (girar_izq){
-            while (rclcpp::ok() && (parada is true)) { 
+            while (rclcpp::ok() && (parada == true)) { 
             message.linear.x = 0.0;
             message.angular.z = giro;
             publisher->publish(message);
@@ -94,7 +94,7 @@ int main(int argc, char * argv[])
         
         
         if (girar_derech){
-             while (rclcpp::ok() && (parada is true)) { // recto
+             while (rclcpp::ok() && (parada == true)) { // recto
                 message.linear.x = 0.0;
                 message.angular.z = 0.0 - giro;
                 publisher->publish(message);
@@ -103,15 +103,15 @@ int main(int argc, char * argv[])
             }
             girar_derech = false;
         }}
-        message.linear.x = 0.0;
-        message.angular.z = 0.0;
-        publisher->publish(message);
-        rclcpp::spin_some(node);
-        loop_rate.sleep();
+    message.linear.x = 0.0;
+    message.angular.z = 0.0;
+    publisher->publish(message);
+    rclcpp::spin_some(node);
+    loop_rate.sleep();
             
-  }
-  rclcpp::shutdown();
-  return 0;
+  
+    rclcpp::shutdown();
+    return 0;
 }
 
 
