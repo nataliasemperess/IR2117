@@ -72,16 +72,16 @@ int main(int argc, char * argv[])
    }
    
    if (estado == S1){
-       message.linear.x = ;
-       message.angular.z = ;
+       message.linear.x = 0.5 ;
+       message.angular.z = 0.0;
    }
    else if (estado == S2){
-       message.linear.x = ;
-       message.angular.z = ;
+       message.linear.x = 0.0;
+       message.angular.z = 0.5;
    }
    else if (estado == S3){
-       message.linear.x = ;
-       message.angular.z = ;
+       message.linear.x = 0.0 ;
+       message.angular.z = -0.5;
    }
    publisher->publish(message);
    rclcpp::spin_some(node);
