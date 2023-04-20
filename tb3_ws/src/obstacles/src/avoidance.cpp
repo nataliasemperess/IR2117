@@ -43,7 +43,7 @@ int main(int argc, char * argv[])
   auto subs_right = node->create_subscription<example_interfaces::msg::Bool>("/right/obstacle", 10, callback_right);
   
   geometry_msgs::msg::Twist message;
-  rclcpp::WallRate loop_rate(50ms);
+  rclcpp::WallRate loop_rate(500ms);
   
 
   while (rclcpp::ok()){
@@ -72,16 +72,16 @@ int main(int argc, char * argv[])
    }
    
    if (estado == S1){
-       message.linear.x = 0.5 ;
+       message.linear.x = 0.2 ;
        message.angular.z = 0.0;
    }
    else if (estado == S2){
        message.linear.x = 0.0;
-       message.angular.z = 0.5;
+       message.angular.z = 0.45;
    }
    else if (estado == S3){
        message.linear.x = 0.0 ;
-       message.angular.z = -0.5;
+       message.angular.z = -0.45;
    }
    publisher->publish(message);
    rclcpp::spin_some(node);
