@@ -20,6 +20,12 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(example_interfaces REQUIRED)
 
+add_executable(server src/add_two_ints_server.cpp)
+ament_target_dependencies(server
+  rclcpp example_interfaces)
+
+
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
@@ -30,5 +36,10 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+install(TARGETS
+  server
+  DESTINATION lib/${PROJECT_NAME})
+
 
 ament_package()
