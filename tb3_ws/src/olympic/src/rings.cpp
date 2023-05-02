@@ -35,6 +35,7 @@ int main(int argc, char * argv[])
  auto node = rclcpp::Node::make_shared("rings");
  auto publisher = node->create_publisher<geometry_msgs::msg::Twist>("/turtle1/cmd_vel", 10);
  
+ this -> declare_parameter("my_parameter", "world");
  geometry_msgs::msg::Twist message;
  
  auto publish_count = 0;
