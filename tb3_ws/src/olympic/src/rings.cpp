@@ -3,6 +3,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 #include "geometry_msgs/msg/twist.hpp"
+#include "turtlesim/srv/set_pen.hpp"
 
 using namespace std::chrono_literals;
 
@@ -25,10 +26,16 @@ int main(int argc, char * argv[])
 
 
     // Call service SetPen
-    // r -> 0;
-    // g -> 0;
-    // b -> 255;
     
+    auto client = node -> create_client<SetPen>("/turtle1/set_pen");
+    auto request = std::make_shared<SetPen::Request>();
+    
+    request -> r = 255;
+    request -> g = 255;
+    request -> b = 0;
+
+    request -> width = 
+    request -> off = 
     
     
     
