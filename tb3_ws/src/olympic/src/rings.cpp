@@ -4,6 +4,7 @@
 #include "std_msgs/msg/string.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "turtlesim/srv/set_pen.hpp"
+#include "turtlesim/srv/teleport_absolute.hpp"
 
 using namespace std::chrono_literals;
 
@@ -25,37 +26,41 @@ int main(int argc, char * argv[])
 
     // Call service SetPen
     
-    auto client = node -> create_client<turtlesim::srv::SetPen>("/turtle1/set_pen")
-    auto request = std::make_shared<turtlesim::srv::SetPen::Request>();
+    auto SetPen_client = node -> create_client<turtlesim::srv::SetPen>("/turtle1/set_pen")
+    auto SetPen_request = std::make_shared<turtlesim::srv::SetPen::Request>();
     
-    request -> r = 0;
-    request -> g = 0;
-    request -> b = 255;
-
-    request -> width = 4;
-    request -> off = true;
-    client->async_send_request(request);
+    SetPen_request -> r = 0;
+    SetPen_request -> g = 0;
+    SetPen_request -> b = 255;
+    SetPen_request -> width = 4;
+    SetPen_request -> off = true;
     
+    SetPen_client->async_send_request(SetPen_request);
     
     
     // Call service TeleportAbsolute
+
+    auto teleport_client = node->create_client<turtlesim::srv::TeleportAbsolute>("/turtle1/teleport_absolute");
+    auto teleport_request = std::make_shared<turtlesim::srv::TeleportAbsolute::Request>();
     
-    // x -> 4.0;
-    // y -> 5.5;
-    // theta -> 0;
+    teleport_request->x = 3.5;
+    teleport_request->y = 5.5;
     
- 
+    teleport_request->theta = 0;
     
- 
- 
- while (rclcpp::ok()) {
-   message.linear.x = 1.0; 
-   message.angular.z = 1.0; 
-   publisher->publish(message);
-   rclcpp::spin_some(node);
-   loop_rate.sleep();
- }
- rclcpp::shutdown();
- return 0;
-}
+    teleport_client->async_send_request(teleport_request);
+
+    SetPen_request->off = false;
+    
+    for (int = 0; i < 14;i++){
+        
+    message.linear.x = 1.0; 
+    message.angular.z = 1.0; 
+    publisher->publish(message);
+    rclcpp::spin_some(node);
+    loop_rate.sleep();
+    }
+    rclcpp::shutdown();
+    return 0;
+    }
 
