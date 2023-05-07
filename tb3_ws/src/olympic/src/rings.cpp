@@ -15,27 +15,26 @@ int main(int argc, char * argv[])
     auto node = rclcpp::Node::make_shared("rings");
     auto publisher = node->create_publisher<geometry_msgs::msg::Twist>("/turtle1/cmd_vel", 10);
     
-    node -> declare_parameter("radius", 1.0); // Declare parameter
-
     geometry_msgs::msg::Twist message;
     rclcpp::WallRate loop_rate(500ms);
     
-    double radius = node -> get_parameter("radius").get_parameter_value().get<double>();
-    double time_circle = 2 * M_PI * radius ;
-    int n_iterations = static_cast<int>(time_circle / 0.01); 
+   
+    node -> declare_parameter("radius", 1.0); // Declare parameter
+    double radius = node->get_parameter("radius").as_double();
 
 
     // Call service SetPen
     
-    auto client = node -> create_client<SetPen>("/turtle1/set_pen");
-    auto request = std::make_shared<SetPen::Request>();
+    auto client = node -> create_client<turtlesim::srv::SetPen>("/turtle1/set_pen")
+    auto request = std::make_shared<turtlesim::srv::SetPen::Request>();
     
-    request -> r = 255;
-    request -> g = 255;
-    request -> b = 0;
+    request -> r = 0;
+    request -> g = 0;
+    request -> b = 255;
 
-    request -> width = 
-    request -> off = 
+    request -> width = 4;
+    request -> off = true;
+    client->async_send_request(request);
     
     
     
