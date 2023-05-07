@@ -27,14 +27,14 @@ int main(int argc, char * argv[])
 
     // Call service SetPen
     
-    auto SetPen_client = node -> create_client<turtlesim::srv::SetPen>("/turtle1/set_pen")
+    auto SetPen_client = node -> create_client<turtlesim::srv::SetPen>("/turtle1/set_pen");
     auto SetPen_request = std::make_shared<turtlesim::srv::SetPen::Request>();
     
     SetPen_request -> r = 0;
     SetPen_request -> g = 0;
     SetPen_request -> b = 255;
     SetPen_request -> width = 4;
-    SetPen_request -> off = true;
+    SetPen_request -> off = false;
     
     SetPen_client->async_send_request(SetPen_request);
     
@@ -44,35 +44,36 @@ int main(int argc, char * argv[])
     auto teleport_client = node->create_client<turtlesim::srv::TeleportAbsolute>("/turtle1/teleport_absolute");
     auto teleport_request = std::make_shared<turtlesim::srv::TeleportAbsolute::Request>();
     
-    teleport_request->x = 3.5;
+    teleport_request->x = 0;
     teleport_request->y = 5.5;
     teleport_request->theta = 0;
     
     teleport_client->async_send_request(teleport_request);
 
-    SetPen_request->off = false;
-
     
-    for (int = 0; i < 14;i++){
+    for (int i= 0; i < 14;i++){
         
+        
+    SetPen_request->off = true;
     message.linear.x = 1.0; 
     message.angular.z = 1.0; 
     publisher->publish(message);
     rclcpp::spin_some(node);
     loop_rate.sleep();
     }
-    
+    SetPen_request ->off = false;
     // ARO  NEGRO
 
     // Call service SetPen
     
-    auto SetPen_client_2 = node -> create_client<turtlesim::srv::SetPen>("/turtle1/set_pen")
+    auto SetPen_client_2 = node -> create_client<turtlesim::srv::SetPen>("/turtle1/set_pen");
     auto SetPen_request_2 = std::make_shared<turtlesim::srv::SetPen::Request>();
     
     SetPen_request_2 -> r = 0;
     SetPen_request_2 -> g = 0;
     SetPen_request_2 -> b = 0;
     SetPen_request_2 -> width = 4;
+    SetPen_request_2 -> off = false;
     
     SetPen_client_2->async_send_request(SetPen_request_2);
     
@@ -87,29 +88,34 @@ int main(int argc, char * argv[])
     teleport_request_2->theta = 0;
     
     teleport_client_2->async_send_request(teleport_request_2);
+    
 
     
-    for (int = 0; i < 14;i++){
+    for (int i = 0; i < 14;i++){
         
+    SetPen_request_2 ->off = true;
     message.linear.x = 1.0; 
     message.angular.z = 1.0; 
     publisher->publish(message);
     rclcpp::spin_some(node);
     loop_rate.sleep();
     }
+    
+    SetPen_request_2 ->off = false;
 
 
     // ARO  ROJO
 
     // Call service SetPen
     
-    auto SetPen_client_3 = node -> create_client<turtlesim::srv::SetPen>("/turtle1/set_pen")
+    auto SetPen_client_3 = node -> create_client<turtlesim::srv::SetPen>("/turtle1/set_pen");
     auto SetPen_request_3 = std::make_shared<turtlesim::srv::SetPen::Request>();
     
     SetPen_request_3 -> r = 255;
     SetPen_request_3 -> g = 0;
     SetPen_request_3 -> b = 0;
     SetPen_request_3 -> width = 4;
+    SetPen_request_3 -> off = false;
     
     SetPen_client_3->async_send_request(SetPen_request_3);
     
@@ -125,26 +131,31 @@ int main(int argc, char * argv[])
     
     teleport_client_3->async_send_request(teleport_request_3);
     
-    for (int = 0; i < 14;i++){
-        
+
+    for (int i= 0; i < 14;i++){
+    SetPen_request_3->off = true;
+    
     message.linear.x = 1.0; 
     message.angular.z = 1.0; 
     publisher->publish(message);
     rclcpp::spin_some(node);
     loop_rate.sleep();
     }
+    
+    SetPen_request_3 -> off = false;
 
     // ARO  VERDE
 
     // Call service SetPen
     
-    auto SetPen_client_4 = node -> create_client<turtlesim::srv::SetPen>("/turtle1/set_pen")
+    auto SetPen_client_4 = node -> create_client<turtlesim::srv::SetPen>("/turtle1/set_pen");
     auto SetPen_request_4= std::make_shared<turtlesim::srv::SetPen::Request>();
     
     SetPen_request_4-> r = 0;
     SetPen_request_4 -> g = 255;
     SetPen_request_4 -> b = 0;
     SetPen_request_4 -> width = 4;
+    SetPen_request_4 -> off = false;
     
     SetPen_client_4->async_send_request(SetPen_request_4);
     
@@ -159,10 +170,11 @@ int main(int argc, char * argv[])
     teleport_request_4->theta = 0;
     
     teleport_client_4->async_send_request(teleport_request_4);
-
     
-    for (int = 0; i < 14;i++){
-        
+    
+    for (int i = 0; i < 14;i++){
+    
+    SetPen_request_4->off = true;
     message.linear.x = 1.0; 
     message.angular.z = 1.0; 
     publisher->publish(message);
@@ -170,18 +182,20 @@ int main(int argc, char * argv[])
     loop_rate.sleep();
     }
 
+    SetPen_request_4->off = false;
 
     // ARO  AMARILLO
 
     // Call service SetPen
     
-    auto SetPen_client_5 = node -> create_client<turtlesim::srv::SetPen>("/turtle1/set_pen")
+    auto SetPen_client_5 = node -> create_client<turtlesim::srv::SetPen>("/turtle1/set_pen");
     auto SetPen_request_5 = std::make_shared<turtlesim::srv::SetPen::Request>();
     
     SetPen_request_5 -> r = 255;
     SetPen_request_5 -> g = 255;
     SetPen_request_5 -> b = 0;
     SetPen_request_5 -> width = 4;
+    SetPen_request_5 -> off = false;
     
     SetPen_client_5->async_send_request(SetPen_request_5);
     
@@ -196,16 +210,20 @@ int main(int argc, char * argv[])
     teleport_request_5->theta = 0;
     
     teleport_client_5->async_send_request(teleport_request_5);
-
     
-    for (int = 0; i < 14;i++){
-        
+    
+    for (int i = 0; i < 14;i++){
+
+    SetPen_request_5->off = true;
+
     message.linear.x = 1.0; 
     message.angular.z = 1.0; 
     publisher->publish(message);
     rclcpp::spin_some(node);
     loop_rate.sleep();
     }
+    
+    SetPen_request_5 -> off = false;
     
     rclcpp::shutdown();
     return 0;
