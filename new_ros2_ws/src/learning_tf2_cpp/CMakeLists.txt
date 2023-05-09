@@ -49,5 +49,9 @@ endif()
 install(TARGETS
 	turtle_tf2_broadcaster
 	DESTINATION lib/${PROJECT_NAME})
+	
+install(DIRECTORY launch
+	DESTINATION share/${PROJECT_NAME})
+
 
 ament_package()
