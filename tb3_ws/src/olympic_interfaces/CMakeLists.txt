@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(olympic)
+project(olympic_interfaces)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -17,28 +17,14 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(geometry_msgs REQUIRED)
-find_package(turtlesim REQUIRED)
+# uncomment the following section in order to fill in
+# further dependencies manually.
+# find_package(<dependency> REQUIRED)
 
-add_executable(rings src/rings.cpp)
-
-target_include_directories(rings PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-
-ament_target_dependencies(
-  rings
-  "rclcpp"
-  "std_msgs"
-  "geometry_msgs"
-  "turtlesim"
+find_package(rosidl_default_generators REQUIRED)
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "action/rings.action"
 )
-
-install(TARGETS 
-  rings
-  DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

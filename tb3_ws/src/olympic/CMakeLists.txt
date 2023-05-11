@@ -23,21 +23,35 @@ find_package(geometry_msgs REQUIRED)
 find_package(turtlesim REQUIRED)
 
 add_executable(rings src/rings.cpp)
+add_executable(rings_action_server src/rings_action_server.cpp)
+add_executable(rings_action_client src/rings_action_client.cpp)
+
 
 target_include_directories(rings PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
-ament_target_dependencies(
-  rings
+ament_target_dependencies(rings
   "rclcpp"
   "std_msgs"
   "geometry_msgs"
   "turtlesim"
 )
 
+ament_target_dependencies(action_server
+  "rclcpp"
+  "rclcpp_action"
+  "olympic_interfaces")
+
+ament_target_dependencies(action_client
+  "rclcpp"
+  "rclcpp_action"
+  "olympic_interfaces")
+
 install(TARGETS 
   rings
+  rings_action_server
+  rings_action_client
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
