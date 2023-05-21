@@ -36,7 +36,7 @@ int main(int argc, char ** argv)
     return 1;
   }
   
-  auto goal_msg = Rings::Goal();
+  auto goal_msg = Fibonacci::Goal();
   goal_msg.order = 10;
 
 
