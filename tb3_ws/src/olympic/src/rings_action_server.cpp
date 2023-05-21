@@ -1,14 +1,16 @@
 #include <inttypes.h>
 #include <memory>
-#include "action_tutorials_interfaces/action/fibonacci.hpp"
+#include "action_tutorials_interfaces/action/rings.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_action/rclcpp_action.hpp"
 
-using Fibonacci = 
-  action_tutorials_interfaces::action::Fibonacci;
-
-using GoalHandleFibonacci = rclcpp_action::ServerGoalHandle<Fibonacci>;
+using Rings = olympic_interfaces::action::Rings;
   
+using GoalHandleRings = rclcpp_action::ServerGoalHandle<Rings>;
+
+rclcpp::Node::SharedPtr node = nullptr;
+
+
   rclcpp_action::GoalResponse handle_goal(
   const rclcpp_action::GoalUUID & uuid, 
   std::shared_ptr<const Fibonacci::Goal> goal)
@@ -79,8 +81,8 @@ int main(int argc, char ** argv)
   rclcpp::init(argc, argv);
   auto node = rclcpp::Node::make_shared("action_server");
   auto action_server = 
-    rclcpp_action::create_server<Fibonacci>(node,
-      "fibonacci",
+    rclcpp_action::create_server<Rings>(node,
+      "rings",
       handle_goal,
       handle_cancel,
       handle_accepted);
