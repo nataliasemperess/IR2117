@@ -1,6 +1,6 @@
 #include <inttypes.h>
 #include <memory>
-#include "action_tutorials_interfaces/action/rings.hpp"
+#include "olympic_interfaces/action/rings.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_action/rclcpp_action.hpp"
 
@@ -25,6 +25,8 @@ int main(int argc, char ** argv)
 {
   rclcpp::init(argc, argv);
   g_node = rclcpp::Node::make_shared("action_client");
+  g_node->declare_parameter("radius", 1.0);  // Radius parameter
+  double radius = g_node->get_parameter("radius").get_parameter_value().get<double>();
   auto action_client = rclcpp_action::create_client<Rings>(
     g_node, "rings");
 
@@ -35,7 +37,7 @@ int main(int argc, char ** argv)
   }
   
   auto goal_msg = Rings::Goal();
-  goal_msg.order = 10;
+  goal_msg.order = radius;
 
 
   RCLCPP_INFO(g_node->get_logger(), 
